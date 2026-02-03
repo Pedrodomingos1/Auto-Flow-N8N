@@ -1,5 +1,11 @@
 import requests
+import os
+from dotenv import load_dotenv
 
+load_dotenv() 
+
+client_id = os.getenv("GOOGLE_CLIENT_ID")
+client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
 
 WEBHOOK_URL = "http://localhost:5678/webhook-test/postar-instagram"
 
