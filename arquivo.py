@@ -1,4 +1,3 @@
-# Este arquivo parece ser uma versão antiga ou redundante de arquivo.py
 import os
 from datetime import datetime
 
@@ -34,24 +33,34 @@ def disparar_automacao(image_url, caption):
         print(f"❌ Erro: {e}")
 
 
-def upload_arquivo_drive(caminho_arquivo):
+def upload_arquivo_drive(caminho_arquivo, agendamento=None, caption=None):
     if not WEBHOOK_URL:
         print("❌ Erro: A variável de ambiente 'N8N_WEBHOOK_URL' não está definida.")
-        return
+        return False
 
     try:
         with open(caminho_arquivo, "rb") as f:
             files = {"file": (os.path.basename(caminho_arquivo), f)}
-            response = requests.post(WEBHOOK_URL, files=files, timeout=30)
+            data = {}
+            if agendamento:
+                data["agendamento"] = agendamento
+            if caption:
+                data["caption"] = caption
+
+            response = requests.post(WEBHOOK_URL, files=files, data=data, timeout=30)
 
         if response.status_code == 200:
             print(f"✅ Upload concluído: {response.status_code}")
+            return True
         else:
             print(f"⚠️ Erro no upload: {response.status_code} - {response.text}")
+            return False
     except requests.exceptions.RequestException as e:
         print(f"❌ Erro de conexão: {e}")
+        return False
     except Exception as e:
         print(f"❌ Erro: {e}")
+        return False
 
 
 if __name__ == "__main__":
