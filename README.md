@@ -1,4 +1,4 @@
-# Automação de Upload para n8n
+# Gestor de Uploads Inteligentes
 
 Este projeto monitora uma pasta local em busca de novas imagens e vídeos (`.jpg`, `.png`, `.mp4`) e as envia automaticamente para um Webhook do n8n (para integração com Google Drive ou outros serviços).
 
